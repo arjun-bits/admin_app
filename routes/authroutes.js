@@ -70,6 +70,7 @@ module.exports = (app) => {
                   console.log(token);
              
             // Check if the token is expired. If expired it is refreshed.
+                return res.status(200).json().redirect('/logincomplete');
             		if (token.expired()) {
             		  try {
             		    token =  token.refresh();
@@ -79,7 +80,7 @@ module.exports = (app) => {
             		}
 
                   return res.status(200).json().redirect('/logincomplete');
-                  
+
                 } catch(error) {
                   console.error('Access Token Error', error.message);
                   return res.status(500).json('Authentication failed');
