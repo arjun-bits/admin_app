@@ -78,6 +78,8 @@ module.exports = (app) => {
             	};
 
             		let accessToken = oauth2.accessToken.create(tokenObject);
+
+                console.log('The resulting token',accessToken);
              
             // Check if the token is expired. If expired it is refreshed.
             		if (accessToken.expired()) {
