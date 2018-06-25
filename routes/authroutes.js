@@ -67,30 +67,19 @@ module.exports = (app) => {
                   req.session.refresh_token = token.refresh_token;
                   req.session.email = email;
 
-                  console.log(req.session.email);
-                  
-                  
-                  // authHelper.getTokenFromRefreshToken(result.refresh_token, tokenReceived, req, res)
-                  const tokenObject = {
-              		'access_token': token,
-              		'refresh_token': token.refresh_token,
-              		'expires_in': token.expires_at
-            	};
-
-            		let accessToken = oauth2.accessToken.create(tokenObject);
-
-                console.log('The resulting token',accessToken);
+                  console.log(token);
              
             // Check if the token is expired. If expired it is refreshed.
-            		if (accessToken.expired()) {
+            		if (token.expired()) {
             		  try {
-            		    accessToken =  accessToken.refresh();
+            		    token =  token.refresh();
             		  } catch (error) {
             		    console.log('Error refreshing access token: ', error.message);
             		  }
             		}
 
                   return res.status(200).json().redirect('/logincomplete');
+                  
                 } catch(error) {
                   console.error('Access Token Error', error.message);
                   return res.status(500).json('Authentication failed');
