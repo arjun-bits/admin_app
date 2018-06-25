@@ -64,10 +64,10 @@ module.exports = (app) => {
                     });
 
                   req.session.access_token = token;
-                  req.session.refresh_token = token.refresh_token;
+                  req.session.refresh_token = token.token.refresh_token;
                   req.session.email = email;
 
-                  console.log(token);
+                  console.log(req.session.refresh_token);
              
             // Check if the token is expired. If expired it is refreshed.
                 return res.status(200).json().redirect('/logincomplete');
@@ -94,7 +94,7 @@ module.exports = (app) => {
 
             app.get("/logincomplete", function(req, res) {
               var access_token = req.session.access_token;
-              var refresh_token = req.session.access_token;
+              var refresh_token = req.session.refresh_token;
               var email = req.session.email;
 
 
