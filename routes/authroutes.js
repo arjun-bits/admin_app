@@ -4,7 +4,7 @@ authHelper = require('./authHelper');
 require('../models/Users');
 const User = mongoose.model('users');
 const keys = require('../config/keys');
-
+require('./sqlroutes')
 var redirectUri = keys.redirectUri;
 
 var scopes = [
@@ -103,6 +103,7 @@ module.exports = (app) => {
                 res.redirect("/");
                 return;
             }
+            connection();
             res.send('Hello<br><p>login complete</p> <br> <a href = "/logout"> logout </a>');
             });
 
