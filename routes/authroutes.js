@@ -59,7 +59,7 @@ module.exports = (app) => {
                       if(existingUser){
                         //We already have a new user
                       }else {
-                        new User({emailId : email}).save();
+                        new User({emailId : email,isOauth: true}).save();
                       }
                     });
 
@@ -70,7 +70,7 @@ module.exports = (app) => {
                   console.log(req.session.refresh_token);
              
             // Check if the token is expired. If expired it is refreshed.
-                return res.status(200).json().redirect('/logincomplete');
+                return res.status(200).json().redirect('http://localhost:3000/');
             		if (token.expired()) {
             		  try {
             		    token =  token.refresh();
@@ -87,10 +87,11 @@ module.exports = (app) => {
                 }
               });
 
-            app.get('/api/current_user',(req,res)=>{
-              res.send(req.session.email);
+            // app.get('/api/current_user',(req,res)=>{
+            //   res.send(req.session.email);
+            //   console.log(req.session.email);
 
-            });
+            // });
 
             app.get("/logincomplete", function(req, res) {
               var access_token = req.session.access_token;
@@ -103,32 +104,15 @@ module.exports = (app) => {
                 res.redirect("/");
                 return;
             }
-            connection();
             res.send('Hello<br><p>login complete</p> <br> <a href = "/logout"> logout </a>');
             });
 
             
-            app.get('/logout', function(req, res) {
-              req.session.destroy();
-              res.redirect('/');
-            });
+            // app.get('/logout', function(req, res) {
+            //   req.session.destroy();
+            //   res.redirect('/');
+            // });
 
 
 }
 
-// function tokenReceived(req, res, error, token) {
-//   if (error) {
-//     console.log('ERROR getting token:'  + error);
-//     res.send('ERROR getting token: ' + error);
-//   }
-//   else {
-//     // save tokens in session
-//     var access_token = token.access_token;
-//     var refresh_token = token.refresh_token;
-//     var email = authHelper.getEmailFromIdToken(token.id_token);
-
-//     console.log('email',email);
-//     console.log('access_token',access_token);
-//     console.log('refresh_token',refresh_token);
-//   }
-// }
